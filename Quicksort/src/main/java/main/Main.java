@@ -13,6 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
     }
+
     public static void mainN() {
         soutTab(tab, "Before quicksort");
 
@@ -21,17 +22,24 @@ public class Main {
         soutTab(tab, "After quicksort");
     }
     public static void mainK() {
-        System.out.println("podaj liczbe");
-        Generator generator = new Generator(insertNumber());
-    }
-
-    public static double insertNumber(){
-        double number = 0;
-        Scanner odczyt = new Scanner(System.in);
-
-        number = odczyt.nextInt();
-        return number;
-
+        Generator generator = new Generator();
+        System.out.println("Wybierz metode wybierania liczb:");
+        System.out.println("1 - automatyczna");
+        System.out.println("2 - ręczna");
+        int choice = (int) Generator.insertNumber();
+        switch (choice){
+            case 1:
+                System.out.print("Podaj zakres generowanych liczb: ");
+                generator.setRange(Generator.insertNumber());
+                generator.generateNumbers();
+                break;
+            case 2:
+                generator.insertNumbersFromConsole();
+                break;
+            default:
+                System.out.println("Jesteś debilem bo nie stosujesz się do instrukcji");
+        }
+        generator.showNumbers();
     }
 
     private static void soutTab(double tab[], String text) {
