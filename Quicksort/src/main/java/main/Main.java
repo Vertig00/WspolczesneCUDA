@@ -17,10 +17,16 @@ public class Main {
     public static void mainN() {
         soutTab(tab, "Before quicksort");
 
+        long startTime = System.nanoTime();
         QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
+        long endTime = System.nanoTime();
+
+        long duration = (endTime - startTime);
+        System.out.println("Time: " + duration + "\n");
 
         soutTab(tab, "After quicksort");
     }
+
     public static void mainK() {
         Generator generator = new Generator();
         System.out.println("Wybierz metode wybierania liczb:");
