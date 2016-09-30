@@ -11,7 +11,7 @@ public class Main {
             10, 32, 2.523, -1.123, 0, 12.345, -9.876};
 
     public static void main(String[] args) {
-
+        mainK();
     }
 
     public static void mainN() {
@@ -32,7 +32,14 @@ public class Main {
         System.out.println("Wybierz metode wybierania liczb:");
         System.out.println("1 - automatyczna");
         System.out.println("2 - ręczna");
-        int choice = (int) Generator.insertNumber();
+        menu((int) Generator.insertNumber(), generator);
+        generator.showNumbers();
+//        TODO: sortowanie liczb itd
+        System.out.print("Czy chcesz uruchomić program ponownie?(Tak-1/Nie-2): ");
+        runProgramAgain((int)Generator.insertNumber());
+    }
+
+    private static void menu(int choice, Generator generator){
         switch (choice){
             case 1:
                 System.out.print("Podaj zakres generowanych liczb: ");
@@ -43,9 +50,23 @@ public class Main {
                 generator.insertNumbersFromConsole();
                 break;
             default:
-                System.out.println("Jesteś debilem bo nie stosujesz się do instrukcji");
+                System.out.println("Wprowadzono błędne dane, wprowadź jeszcze raz ");
+                menu((int) Generator.insertNumber(), generator);
         }
-        generator.showNumbers();
+    }
+
+    private static void runProgramAgain(int choice){
+        switch (choice){
+            case 1:
+                mainK();
+                break;
+            case 2:
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Podano nieprawidłowe dane, wprowadź jeszczę raz.");
+                runProgramAgain((int)Generator.insertNumber());
+        }
     }
 
     private static void soutTab(double tab[], String text) {
