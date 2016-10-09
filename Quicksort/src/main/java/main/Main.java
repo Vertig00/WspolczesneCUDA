@@ -1,6 +1,8 @@
 package main;
 
+
 import java.util.List;
+
 
 /**
  * Created by lukasz on 27.09.16.
@@ -32,7 +34,6 @@ public class Main {
         for (int i = 0; i < tab.length; i++) {
             tab[i] = list.get(i);
         }
-
 
         long startTime, endTime, duration;
         double mili;
