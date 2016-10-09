@@ -33,13 +33,16 @@ public class Main {
             tab[i] = list.get(i);
         }
 
-        // random
-        long startTime = System.nanoTime();
-        tab = QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
-        long endTime = System.nanoTime();
 
-        long duration = (endTime - startTime);
-        double mili = duration / 1000000.0;
+        long startTime, endTime, duration;
+        double mili;
+        // random
+        startTime = System.nanoTime();
+        tab = QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
+        endTime = System.nanoTime();
+
+        duration = (endTime - startTime);
+        mili = duration / 1000000.0;
         System.out.println("---> Time RAND (mili): " + mili + "");
 
         // sorted
@@ -49,8 +52,26 @@ public class Main {
 
         duration = (endTime - startTime);
         mili = duration / 1000000.0;
-        System.out.println("---> Time SORT (mili): " + mili + "\n\n\n");
+        System.out.println("---> Time SORT (mili): " + mili);
 
+        // reverse sorted
+        tab = reverseTab(tab);
+        startTime = System.nanoTime();
+        tab = QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
+        endTime = System.nanoTime();
+
+        duration = (endTime - startTime);
+        mili = duration / 1000000.0;
+        System.out.println("---> Time SORT (mili): " + mili + "\n\n\n");
+    }
+
+    private static double[] reverseTab(double[] tab) {
+        for (int i = 0; i < tab.length / 2; i++) {
+            double temp = tab[i];
+            tab[i] = tab[tab.length - i - 1];
+            tab[tab.length - i - 1] = temp;
+        }
+        return tab;
     }
 
     public static void mainK() {
