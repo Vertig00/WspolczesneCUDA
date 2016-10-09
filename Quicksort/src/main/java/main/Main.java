@@ -1,6 +1,6 @@
 package main;
 
-import java.util.Scanner;
+import java.util.List;
 
 /**
  * Created by lukasz on 27.09.16.
@@ -27,14 +27,43 @@ public class Main {
         soutTab(tab, "After quicksort");
     }
 
+    private static void sortBundle(List<Double> list) {
+        double[] tab = new double[list.size()];
+        for (int i = 0; i < tab.length; i++) {
+            tab[i] = list.get(i);
+        }
+
+        // random
+        long startTime = System.nanoTime();
+        tab = QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
+        long endTime = System.nanoTime();
+
+        long duration = (endTime - startTime);
+        double mili = duration / 1000000.0;
+        System.out.println("---> Time RAND (mili): " + mili + "");
+
+        // sorted
+        startTime = System.nanoTime();
+        tab = QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
+        endTime = System.nanoTime();
+
+        duration = (endTime - startTime);
+        mili = duration / 1000000.0;
+        System.out.println("---> Time SORT (mili): " + mili + "\n\n\n");
+
+    }
+
     public static void mainK() {
         Generator generator = new Generator();
         System.out.println("Wybierz metode wybierania liczb:");
         System.out.println("1 - automatyczna");
         System.out.println("2 - ręczna");
         menu((int) Generator.insertNumber(), generator);
-        generator.showNumbers();
-//        TODO: sortowanie liczb itd
+//        generator.showNumbers();
+
+//        TODO: Sortowanie liczb itd
+        sortBundle(generator.getNumbers());
+
         System.out.print("Czy chcesz uruchomić program ponownie?(Tak-1/Nie-2): ");
         runProgramAgain((int)Generator.insertNumber());
     }

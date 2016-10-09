@@ -5,7 +5,7 @@ package main;
  */
 public class QuickSort {
 
-    public static void quicksSortCalc(double tablica[], int x, int y) {
+    public static double[] quicksSortCalc(double tablica[], int x, int y) {
 
         int i, j;
         double v, temp;
@@ -31,6 +31,8 @@ public class QuickSort {
             quicksSortCalc(tablica, x, j);
         if (i < y)
             quicksSortCalc(tablica, i, y);
+
+        return tablica;
     }
 
 }
