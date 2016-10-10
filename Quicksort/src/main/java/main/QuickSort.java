@@ -14,14 +14,15 @@ public class QuickSort {
     /**
      * Quicksort Example 1
      */
-    public static double[] quicksSortCalc(double tablica[], int x, int y) {
+    public static double[] quickSortCalc(double tablica[], int x, int y) {
 
         int i, j;
         double v, temp;
 
         i = x;
         j = y;
-        v = tablica[(x + y) / 2];
+//        v = tablica[(x + y) / 2];
+        v = tablica[x];
         do {
             while (tablica[i] < v)
                 i++;
@@ -37,9 +38,9 @@ public class QuickSort {
         }
         while (i <= j);
         if (x < j)
-            quicksSortCalc(tablica, x, j);
+            quickSortCalc(tablica, x, j);
         if (i < y)
-            quicksSortCalc(tablica, i, y);
+            quickSortCalc(tablica, i, y);
 
         return tablica;
     }

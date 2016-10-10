@@ -20,7 +20,7 @@ public class Main {
         soutTab(tab, "Before quicksort");
 
         long startTime = System.nanoTime();
-        QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
+        QuickSort.quickSortCalc(tab, 0, tab.length - 1);
         long endTime = System.nanoTime();
 
         long duration = (endTime - startTime);
@@ -45,7 +45,7 @@ public class Main {
 
         // random
         startTime = System.nanoTime();
-        tab = QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
+        tab = QuickSort.quickSortCalc(tab, 0, tab.length - 1);
         endTime = System.nanoTime();
 
         duration = (endTime - startTime);
@@ -56,7 +56,7 @@ public class Main {
 
         // sorted
         startTime = System.nanoTime();
-        tab = QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
+        tab = QuickSort.quickSortCalc(tab, 0, tab.length - 1);
         endTime = System.nanoTime();
 
         duration = (endTime - startTime);
@@ -68,7 +68,7 @@ public class Main {
         // reverse sorted
 //        tab = reverseTab(tab);
 //        startTime = System.nanoTime();
-//        tab = QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
+//        tab = QuickSort.quickSortCalc(tab, 0, tab.length - 1);
 //        endTime = System.nanoTime();
 //
 //        duration = (endTime - startTime);
