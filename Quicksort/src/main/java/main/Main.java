@@ -55,6 +55,7 @@ public class Main {
         System.out.printf("%7s %-12d %-12.3f%n", "RAND", tab.length, mili);
 
         // sorted
+///*
         startTime = System.nanoTime();
         tab = QuickSort.quickSortCalc(tab, 0, tab.length - 1);
         endTime = System.nanoTime();
@@ -64,16 +65,7 @@ public class Main {
 //        System.out.println("---> Time SORT (mili): " + mili);
 //        System.out.println("BEST" + "\t" + tab.length + "\t" + mili );
         System.out.printf("%7s %-12d %-12.3f%n", "SORT", tab.length, mili);
-
-        // reverse sorted
-//        tab = reverseTab(tab);
-//        startTime = System.nanoTime();
-//        tab = QuickSort.quickSortCalc(tab, 0, tab.length - 1);
-//        endTime = System.nanoTime();
-//
-//        duration = (endTime - startTime);
-//        mili = duration / 1000000.0;
-//        System.out.println("---> Time SORT (mili): " + mili + "\n\n\n");
+//*/
 
         System.out.println("\n");
     }
