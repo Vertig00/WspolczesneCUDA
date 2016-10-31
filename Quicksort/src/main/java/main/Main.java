@@ -1,6 +1,8 @@
 package main;
 
-import java.util.Scanner;
+
+import java.util.List;
+
 
 /**
  * Created by lukasz on 27.09.16.
@@ -18,7 +20,7 @@ public class Main {
         soutTab(tab, "Before quicksort");
 
         long startTime = System.nanoTime();
-        QuickSort.quicksSortCalc(tab, 0, tab.length - 1);
+        QuickSort.quickSortCalc(tab, 0, tab.length - 1);
         long endTime = System.nanoTime();
 
         long duration = (endTime - startTime);
@@ -27,14 +29,67 @@ public class Main {
         soutTab(tab, "After quicksort");
     }
 
+    private static void sortBundle(List<Double> list) {
+        System.out.println("\nWYNIKI");
+
+        double[] tab = new double[list.size()];
+        for (int i = 0; i < tab.length; i++) {
+            tab[i] = list.get(i);
+        }
+
+        long startTime, endTime, duration;
+        double mili;
+
+//        System.out.println("tab" + "\t" + "elem" + "\t" + "czas (ms)" );
+        System.out.printf("%7s %-12s %-12s%n", "tablica", "elementow", "czas");
+
+        // random
+        startTime = System.nanoTime();
+        tab = QuickSort.quickSortCalc(tab, 0, tab.length - 1);
+        endTime = System.nanoTime();
+
+        duration = (endTime - startTime);
+        mili = duration / 1000000.0;
+//        System.out.println("---> Time RAND (mili): " + mili + "");
+//        System.out.println("RAND" + "\t" + tab.length + "\t" + mili );
+        System.out.printf("%7s %-12d %-12.3f%n", "RAND", tab.length, mili);
+
+        // sorted
+///*
+        startTime = System.nanoTime();
+        tab = QuickSort.quickSortCalc(tab, 0, tab.length - 1);
+        endTime = System.nanoTime();
+
+        duration = (endTime - startTime);
+        mili = duration / 1000000.0;
+//        System.out.println("---> Time SORT (mili): " + mili);
+//        System.out.println("BEST" + "\t" + tab.length + "\t" + mili );
+        System.out.printf("%7s %-12d %-12.3f%n", "SORT", tab.length, mili);
+//*/
+
+        System.out.println("\n");
+    }
+
+    private static double[] reverseTab(double[] tab) {
+        for (int i = 0; i < tab.length / 2; i++) {
+            double temp = tab[i];
+            tab[i] = tab[tab.length - i - 1];
+            tab[tab.length - i - 1] = temp;
+        }
+        return tab;
+    }
+
     public static void mainK() {
         Generator generator = new Generator();
         System.out.println("Wybierz metode wybierania liczb:");
         System.out.println("1 - automatyczna");
         System.out.println("2 - ręczna");
         menu((int) Generator.insertNumber(), generator);
-        generator.showNumbers();
-//        TODO: sortowanie liczb itd
+//        generator.showNumbers();
+
+//        TODO: Sortowanie liczb itd
+        sortBundle(generator.getNumbers());
+
         System.out.print("Czy chcesz uruchomić program ponownie?(Tak-1/Nie-2): ");
         runProgramAgain((int)Generator.insertNumber());
     }
