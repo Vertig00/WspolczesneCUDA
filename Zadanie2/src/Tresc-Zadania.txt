@@ -1,4 +1,6 @@
-Celem ćwiczenia jest zaprojektowanie i implementacja masowo-równoległego algorytmu do obliczania operacji mnożenia macierzy przez wektor. Algorytm powinien działać poprawnie dla macierzy kwadratowych o N na N elementach, gdzie N jest całkowitą potęgą dwóch.
+Celem ćwiczenia jest zaprojektowanie i implementacja masowo-równoległego algorytmu do obliczania
+operacji mnożenia macierzy przez wektor. Algorytm powinien działać poprawnie dla macierzy kwadratowych
+o N na N elementach, gdzie N jest całkowitą potęgą dwóch.
 
 Podczas projektowania algorytmu należy przyjąć:
 
