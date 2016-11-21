@@ -13,6 +13,10 @@ public class RunZad2 {
         List<int[]> vectorDataSets = new ArrayList<int[]>();
 
         // TODO: Wypełnienie datasetów
+        for (int i = 4; i < 12; i++) {
+            matrixDataSets.add(Generator.fillMatrix(i));
+            vectorDataSets.add(Generator.fillVector(i));
+        }
 
         for (int i = 0; i < matrixDataSets.size(); i++) {
             System.out.println("   test :: " + i);
