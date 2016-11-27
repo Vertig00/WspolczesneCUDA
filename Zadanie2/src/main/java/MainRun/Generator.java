@@ -1,3 +1,5 @@
+package MainRun;
+
 import java.util.Random;
 
 /**
@@ -12,7 +14,7 @@ public class Generator {
         int[][] matrix = new int[pow][pow];
         Random random = new Random();
 
-        for (int i = 0 ; i < pow; i++){
+        for (int i = 0; i < pow; i++){
             for (int j = 0; j < pow; j++){
                 matrix[i][j] = random.nextInt(range);
             }

@@ -1,10 +1,8 @@
+package MainRun;
 
 import jcuda.Pointer;
 import jcuda.Sizeof;
 import jcuda.jcublas.JCublas;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Nex0Zero on 2016-11-21.
@@ -14,48 +12,50 @@ public class RunZad2 {
     public static void main(String[] args) {
         System.out.println("SPEEDTEST :: START\n");
 
-        List<int[][]> matrixDataSets = new ArrayList<int[][]>();
-        List<int[]> vectorDataSets = new ArrayList<int[]>();
+        CzaryIMagia.zaklinanie();
 
-        // TODO: Wypełnienie datasetów
-        for (int i = 4; i < 12; i++) {
-            matrixDataSets.add(Generator.fillMatrix(i));
-            vectorDataSets.add(Generator.fillVector(i));
-        }
-
-        for (int i = 0; i < matrixDataSets.size(); i++) {
-            System.out.println("   test :: " + i);
-
-            int[][] matrix = matrixDataSets.get(i);
-            int[] vector = vectorDataSets.get(i);
-
-            System.out.println("    n : " + vector.length);
-
-
-            // JAVA segment
-            long startTimeJava = System.nanoTime();
-            javaTest(matrix, vector);
-            long endTimeJava = System.nanoTime();
-
-            // JAVA time measurment
-            long estimatedTimeJava = endTimeJava - startTimeJava;
-            double estimatedTimeJavaMilli = (double) estimatedTimeJava / 1000000.0;
-            System.out.println("       JAVA time : " + estimatedTimeJavaMilli + " ms");
-
-
-            // JCUDA segment
-            long startTimeJcuda = System.nanoTime();
-            jcudaTest(matrix, vector);
-            long endTimeJcuda = System.nanoTime();
-
-            // JAVA time measurment
-            long estimatedTimeJcuda = endTimeJcuda - startTimeJcuda;
-            double estimatedTimeJcudaMilli = (double) estimatedTimeJcuda / 1000000.0;
-            System.out.println("      JCUDA time : " + estimatedTimeJcudaMilli + " ms");
-
-
-            System.out.println("");
-        }
+//        List<int[][]> matrixDataSets = new ArrayList<int[][]>();
+//        List<int[]> vectorDataSets = new ArrayList<int[]>();
+//
+//        // TODO: Wypełnienie datasetów
+//        for (int i = 4; i < 12; i++) {
+//            matrixDataSets.add(Generator.fillMatrix(i));
+//            vectorDataSets.add(Generator.fillVector(i));
+//        }
+//
+//        for (int i = 0; i < matrixDataSets.size(); i++) {
+//            System.out.println("   test :: " + i);
+//
+//            int[][] matrix = matrixDataSets.get(i);
+//            int[] vector = vectorDataSets.get(i);
+//
+//            System.out.println("    n : " + vector.length);
+//
+//
+//            // JAVA segment
+//            long startTimeJava = System.nanoTime();
+//            javaTest(matrix, vector);
+//            long endTimeJava = System.nanoTime();
+//
+//            // JAVA time measurment
+//            long estimatedTimeJava = endTimeJava - startTimeJava;
+//            double estimatedTimeJavaMilli = (double) estimatedTimeJava / 1000000.0;
+//            System.out.println("       JAVA time : " + estimatedTimeJavaMilli + " ms");
+//
+//
+//            // JCUDA segment
+//            long startTimeJcuda = System.nanoTime();
+//            jcudaTest(matrix, vector);
+//            long endTimeJcuda = System.nanoTime();
+//
+//            // JAVA time measurment
+//            long estimatedTimeJcuda = endTimeJcuda - startTimeJcuda;
+//            double estimatedTimeJcudaMilli = (double) estimatedTimeJcuda / 1000000.0;
+//            System.out.println("      JCUDA time : " + estimatedTimeJcudaMilli + " ms");
+//
+//
+//            System.out.println("");
+//        }
 
         System.out.println("SPEEDTEST :: END\n");
     }
