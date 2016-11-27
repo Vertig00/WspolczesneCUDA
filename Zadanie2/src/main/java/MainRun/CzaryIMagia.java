@@ -5,6 +5,9 @@ import jcuda.Sizeof;
 import jcuda.driver.*;
 import jcuda.runtime.JCuda;
 
+import java.io.IOException;
+
+import static MainRun.Niewlasne.preparePtxFile;
 import static jcuda.driver.JCudaDriver.*;
 
 /**
@@ -13,11 +16,11 @@ import static jcuda.driver.JCudaDriver.*;
 public class CzaryIMagia {
 
     // DATA
-    static String CUClass = "PlainMultiply.cu";
+    static String CUClass = "C:\\WORKSPACE\\IdeaProjects\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\PlainMultiply.cu";
     static String CUMethod = "multiply";
     static CUfunction function;
-    static int threads = 8;
-    static int blocks = 16;
+    static int threads = 512;
+    static int blocks = 1024;
 
     // TEMP - DATA
     static int size_data[] = {5};
@@ -62,6 +65,14 @@ public class CzaryIMagia {
 
     private static void wtepneZaklinanieKarty() {
 
+        // Przygotowanie supremacji PTX
+        String ptxFileName = "";
+        try {
+            ptxFileName = preparePtxFile(CUClass);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // Wstepne Zaklinanie karty graficznej
         cuInit(0);
         CUcontext pctx = new CUcontext();
@@ -71,10 +82,11 @@ public class CzaryIMagia {
 
         // Odczytanie zwojów szkoły magii C++
         CUmodule module = new CUmodule();
-        cuModuleLoad(module, CUClass);
+        cuModuleLoad(module, ptxFileName);
 
         // Wybranie zaklęcia ze zwojów C++
 //        CUfunction
+
         function = new CUfunction();
         cuModuleGetFunction(function, module, CUMethod);
 
