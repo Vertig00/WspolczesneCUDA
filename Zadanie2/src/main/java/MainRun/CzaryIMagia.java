@@ -18,31 +18,30 @@ public class CzaryIMagia {
     // DATA
     static String CUClass = "C:\\WORKSPACE\\IdeaProjects\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\PlainMultiply.cu";
     static String CUMethod = "multiply";
-    static CUfunction function;
-    static int threads = 8;
-    static int blocks = 16;
 
-    // TEMP - DATA
-    static int size_data[] = {5};
-    static float init_data[] = {1.0f, 2.0f, 3.0f, 4.0f, 6.0f};
-    static float func_data[] = {0.5f, 0.5f, 0.5f, 0.5f, 0.5f};
-    static float res_data[] = {1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+    static String CUClass2 = "C:\\WORKSPACE\\IdeaProjects\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\MatrixToVectorAddition.cu";
+    static String CUMethod2 = "add";
 
-    public static void zaklinanie() {
+    public static float[] zaklinanieMnozenia(float[] matrix_data, float[] vector_data, int n) {
+        float result_data[] = new float[n];
+        int threads = obliczenieIlościApostatów(n * n);
+        int blocks = threads * 2;
 
-        wtepneZaklinanieKarty();
+        // Wstępne zaklinanieMnozenia Potężnej Karty
+        CUfunction function = wtepneZaklinanieKarty(CUClass, CUMethod);
 
-        CUdeviceptr size_dev = przygotowanieOfiaryInt(size_data);
-        CUdeviceptr init_dev = przygotowanieOfiaryFloat(init_data);
-        CUdeviceptr func_dev = przygotowanieOfiaryFloat(func_data);
-        CUdeviceptr res_dev = przygotowanieOfiaryFloat(res_data);
+        // Przygotowanie poszczególnych ofiar
+        int size_data[] = {n};
+        CUdeviceptr matrix_dev = przygotowanieOfiaryFloat(matrix_data);
+        CUdeviceptr vector_dev = przygotowanieOfiaryFloat(vector_data);
+        CUdeviceptr result_dev = przygotowanieOfiaryFloat(result_data);
 
         // Zebranie wszystkich ofiar dla karty
         Pointer kernelParameters = Pointer.to(
-                Pointer.to(size_dev),
-                Pointer.to(init_dev),
-                Pointer.to(func_dev),
-                Pointer.to(res_dev)
+                Pointer.to(size_data),
+                Pointer.to(matrix_dev),
+                Pointer.to(vector_dev),
+                Pointer.to(result_dev)
         );
 
         // Rozpoczecie Rzucania Czarow Na Ofiary
@@ -53,21 +52,55 @@ public class CzaryIMagia {
                 kernelParameters, null);
 
         // Odczytanie woli Karty
-        float[] out_data = new float[5];
-        cuMemcpyDtoH(Pointer.to(out_data), res_dev, Sizeof.FLOAT * res_data.length);
-
-        for (float el : out_data)
-            System.out.println(el);
+        cuMemcpyDtoH(Pointer.to(result_data), result_dev, Sizeof.FLOAT * result_data.length);
 
         // Oczyszczenie stołu zaklęć
-        JCuda.cudaFree(size_dev);
-        JCuda.cudaFree(init_dev);
-        JCuda.cudaFree(func_dev);
-        JCuda.cudaFree(res_dev);
+        JCuda.cudaFree(matrix_dev);
+        JCuda.cudaFree(vector_dev);
+        JCuda.cudaFree(result_dev);
+
+        return result_data;
+    }
+
+    public static float[] zaklinanieDodawania(float[] matrix_data, int n) {
+        float result_data[] = new float[n];
+        int threads = obliczenieIlościApostatów(n);
+        int blocks = threads * 2;
+
+        // Wstępne zaklinanieMnozenia Potężnej Karty
+        CUfunction function = wtepneZaklinanieKarty(CUClass2, CUMethod2);
+
+        // Przygotowanie poszczególnych ofiar
+        int size_data[] = {n};
+        CUdeviceptr matrix_dev = przygotowanieOfiaryFloat(matrix_data);
+        CUdeviceptr result_dev = przygotowanieOfiaryFloat(result_data);
+
+        // Zebranie wszystkich ofiar dla karty
+        Pointer kernelParameters = Pointer.to(
+                Pointer.to(size_data),
+                Pointer.to(matrix_dev),
+                Pointer.to(result_dev)
+        );
+
+        // Rozpoczecie Rzucania Czarow Na Ofiary
+        cuLaunchKernel(function,
+                blocks, 1, 1,
+                threads, 1, 1,
+                0, null,
+                kernelParameters, null);
+
+        // Odczytanie woli Karty
+        cuMemcpyDtoH(Pointer.to(result_data), result_dev, Sizeof.FLOAT * result_data.length);
+
+        // Oczyszczenie stołu zaklęć
+        JCuda.cudaFree(matrix_dev);
+        JCuda.cudaFree(result_dev);
+
+        return result_data;
     }
 
 
-    private static void wtepneZaklinanieKarty() {
+    private static CUfunction wtepneZaklinanieKarty(String CUClass, String CUMethod) {
 
         // Przygotowanie supremacji PTX
         String ptxFileName = "";
@@ -89,10 +122,10 @@ public class CzaryIMagia {
         cuModuleLoad(module, ptxFileName);
 
         // Wybranie zaklęcia ze zwojów C++
-//        CUfunction
-
-        function = new CUfunction();
+        CUfunction function = new CUfunction();
         cuModuleGetFunction(function, module, CUMethod);
+
+        return function;
 
     }
 
@@ -110,17 +143,14 @@ public class CzaryIMagia {
 
     }
 
-    private static CUdeviceptr przygotowanieOfiaryInt(int[] data) {
+    private static int obliczenieIlościApostatów(int n) {
+        int required = n;
+        int powerOf2 = 1;
 
-        // Wskaźnik na ofiare
-        CUdeviceptr pointer = new CUdeviceptr();
-        // Zadeklarowanie wielkości ofiary
-        cuMemAlloc(pointer, Sizeof.INT * data.length);
-        // Wysłanie ofiary do Potężnej Karty Graficznej
-        cuMemcpyHtoD(pointer, Pointer.to(data), Sizeof.INT * data.length);
+        while ((int) Math.pow(2, powerOf2) < required)
+            powerOf2++;
 
-        // Zwrot wskaznika właścicielowi ofiary
-        return pointer;
+        return (int) Math.pow(2, powerOf2);
 
     }
 

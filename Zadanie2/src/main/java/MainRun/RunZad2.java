@@ -12,7 +12,16 @@ public class RunZad2 {
     public static void main(String[] args) {
         System.out.println("SPEEDTEST :: START\n");
 
-        CzaryIMagia.zaklinanie();
+        int size_data[] = {3};
+        float init_data[] = {1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f};
+        float func_data[] = {0.5f, 0.5f, 0.5f, 0.5f, 0.5f};
+//        float result_data[] = CzaryIMagia.zaklinanieMnozenia(init_data, func_data, size_data[0]);
+        float result_data[] = CzaryIMagia.zaklinanieDodawania(init_data, size_data[0]);
+
+
+        for (float el : result_data)
+            System.out.println(el);
+
 
 //        List<int[][]> matrixDataSets = new ArrayList<int[][]>();
 //        List<int[]> vectorDataSets = new ArrayList<int[]>();
