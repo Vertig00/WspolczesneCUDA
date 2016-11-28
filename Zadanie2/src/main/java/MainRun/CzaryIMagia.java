@@ -19,14 +19,14 @@ public class CzaryIMagia {
     static String CUClass = "C:\\WORKSPACE\\IdeaProjects\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\PlainMultiply.cu";
     static String CUMethod = "multiply";
     static CUfunction function;
-    static int threads = 512;
-    static int blocks = 1024;
+    static int threads = 8;
+    static int blocks = 16;
 
     // TEMP - DATA
     static int size_data[] = {5};
     static float init_data[] = {1.0f, 2.0f, 3.0f, 4.0f, 6.0f};
     static float func_data[] = {0.5f, 0.5f, 0.5f, 0.5f, 0.5f};
-    static float res_data[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    static float res_data[] = {1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
 
     public static void zaklinanie() {
 
@@ -53,7 +53,11 @@ public class CzaryIMagia {
                 kernelParameters, null);
 
         // Odczytanie woli Karty
-        cuMemcpyDtoH(Pointer.to(res_data), res_dev, Sizeof.FLOAT * res_data.length);
+        float[] out_data = new float[5];
+        cuMemcpyDtoH(Pointer.to(out_data), res_dev, Sizeof.FLOAT * res_data.length);
+
+        for (float el : out_data)
+            System.out.println(el);
 
         // Oczyszczenie stołu zaklęć
         JCuda.cudaFree(size_dev);
