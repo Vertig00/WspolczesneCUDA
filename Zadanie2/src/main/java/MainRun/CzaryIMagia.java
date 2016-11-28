@@ -23,7 +23,7 @@ public class CzaryIMagia {
     static String CUMethod2 = "add";
 
     public static float[] zaklinanieMnozenia(float[] matrix_data, float[] vector_data, int n) {
-        float result_data[] = new float[n];
+        float result_data[] = new float[n * n];
         int threads = obliczenieIlościApostatów(n * n);
         int blocks = threads * 2;
 

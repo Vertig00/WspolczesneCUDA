@@ -9,27 +9,27 @@ public class Generator {
 
     private static final int range = 100;       //zakres generowanych liczb
 
-    public static int[][] fillMatrix(int number){
+    public static float[][] fillMatrix(int number) {
         int pow = (int) Math.pow(2, number);
-        int[][] matrix = new int[pow][pow];
+        float[][] matrix = new float[pow][pow];
         Random random = new Random();
 
         for (int i = 0; i < pow; i++){
             for (int j = 0; j < pow; j++){
-                matrix[i][j] = random.nextInt(range);
+                matrix[i][j] = random.nextFloat();
             }
         }
 
         return matrix;
     }
 
-    public static int[] fillVector(int number){
+    public static float[] fillVector(int number) {
         int pow = (int) Math.pow(2, number);
-        int[] vector = new int[pow];
+        float[] vector = new float[pow];
         Random random = new Random();
 
         for (int i = 0; i < pow; i++){
-            vector[i] = random.nextInt(range);
+            vector[i] = random.nextFloat();
         }
 
         return vector;
