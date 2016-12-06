@@ -16,10 +16,10 @@ import static jcuda.driver.JCudaDriver.*;
 public class CzaryIMagia {
 
     // DATA
-    static String CUClass = "C:\\WORKSPACE\\IdeaProjects\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\PlainMultiply.cu";
+    static String CUClass = "C:\\Users\\Vertig0\\Documents\\GitHub\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\PlainMultiply.cu";
     static String CUMethod = "multiply";
 
-    static String CUClass2 = "C:\\WORKSPACE\\IdeaProjects\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\MatrixToVectorAddition.cu";
+    static String CUClass2 = "C:\\Users\\Vertig0\\Documents\\GitHub\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\MatrixToVectorAddition.cu";
     static String CUMethod2 = "add";
 
     public static float[] zaklinanieMnozenia(float[] matrix_data, float[] vector_data, int n) {
