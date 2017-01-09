@@ -6,7 +6,7 @@ import java.util.Random;
 public class DataProvider {
 
 
-    public static float[] initializeData(int iterations, int period){
+    public static float[] initializeData(int iterations, float period) {
         float[] data = new float[iterations];
 
         Random random = new Random();
