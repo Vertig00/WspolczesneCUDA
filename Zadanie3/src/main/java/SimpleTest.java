@@ -1,5 +1,3 @@
-package MainRun;
-
 import jcuda.Pointer;
 import jcuda.Sizeof;
 import jcuda.driver.*;
@@ -7,20 +5,15 @@ import jcuda.runtime.JCuda;
 
 import java.io.IOException;
 
-import static MainRun.Niewlasne.preparePtxFile;
 import static jcuda.driver.JCudaDriver.*;
 
 /**
- * Created by Nex0Zero on 2016-11-27.
+ * Created by Nex0Zero on 2017-01-09.
  */
-public class CzaryIMagia {
+public class SimpleTest {
 
-    // DATA
     static String CUClass = "C:\\Users\\Vertig0\\Documents\\GitHub\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\PlainMultiply.cu";
     static String CUMethod = "multiply";
-
-    static String CUClass2 = "C:\\Users\\Vertig0\\Documents\\GitHub\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\MatrixToVectorAddition.cu";
-    static String CUMethod2 = "add";
 
     public static float[] zaklinanieMnozenia(float[] matrix_data, float[] vector_data, int n) {
         float result_data[] = new float[n * n];
@@ -57,43 +50,6 @@ public class CzaryIMagia {
         // Oczyszczenie stołu zaklęć
         JCuda.cudaFree(matrix_dev);
         JCuda.cudaFree(vector_dev);
-        JCuda.cudaFree(result_dev);
-
-        return result_data;
-    }
-
-    public static float[] zaklinanieDodawania(float[] matrix_data, int n) {
-        float result_data[] = new float[n];
-        int threads = obliczenieIlościApostatów(n);
-        int blocks = threads * 2;
-
-        // Wstępne zaklinanieMnozenia Potężnej Karty
-        CUfunction function = wtepneZaklinanieKarty(CUClass2, CUMethod2);
-
-        // Przygotowanie poszczególnych ofiar
-        int size_data[] = {n};
-        CUdeviceptr matrix_dev = przygotowanieOfiaryFloat(matrix_data);
-        CUdeviceptr result_dev = przygotowanieOfiaryFloat(result_data);
-
-        // Zebranie wszystkich ofiar dla karty
-        Pointer kernelParameters = Pointer.to(
-                Pointer.to(size_data),
-                Pointer.to(matrix_dev),
-                Pointer.to(result_dev)
-        );
-
-        // Rozpoczecie Rzucania Czarow Na Ofiary
-        cuLaunchKernel(function,
-                blocks, 1, 1,
-                threads, 1, 1,
-                0, null,
-                kernelParameters, null);
-
-        // Odczytanie woli Karty
-        cuMemcpyDtoH(Pointer.to(result_data), result_dev, Sizeof.FLOAT * result_data.length);
-
-        // Oczyszczenie stołu zaklęć
-        JCuda.cudaFree(matrix_dev);
         JCuda.cudaFree(result_dev);
 
         return result_data;
@@ -153,5 +109,6 @@ public class CzaryIMagia {
         return (int) Math.pow(2, powerOf2);
 
     }
+
 
 }
