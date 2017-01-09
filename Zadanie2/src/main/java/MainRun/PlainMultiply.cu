@@ -1,8 +1,9 @@
 extern "C"
 __global__ void multiply(int n, float *a, float *b, float *sum)
 {
-    int i = threadIdx.x ;
-    int j = threadIdx.x % n;
+    int ind = threadIdx.x + blockDim.x * blockIdx.x;
+    int i = ind ;
+    int j = ind % n;
 
     if (j<n)
     {

@@ -36,7 +36,7 @@ public class RunZad2 {
 
             // JAVA segment
             long startTimeJava = System.nanoTime();
-            javaTest(matrix, vector);
+            float[] javaResult = javaTest(matrix, vector);
             long endTimeJava = System.nanoTime();
 
             // JAVA time measurment
@@ -52,7 +52,7 @@ public class RunZad2 {
             // JCUDA segment
             long startTimeJcuda = System.nanoTime();
             float result_data1[] = CzaryIMagia.zaklinanieMnozenia(matrix1d, vector, size_data[0]);
-            float result_data2[] = CzaryIMagia.zaklinanieDodawania(result_data1, size_data[0]);
+            float cudaResult[] = CzaryIMagia.zaklinanieDodawania(result_data1, size_data[0]);
             long endTimeJcuda = System.nanoTime();
 
             // JAVA time measurment
@@ -60,6 +60,22 @@ public class RunZad2 {
             double estimatedTimeJcudaMilli = (double) estimatedTimeJcuda / 1000000.0;
             System.out.println("      JCUDA time : " + estimatedTimeJcudaMilli + " ms");
 
+            // ----------------------------------------------------------------------------------
+
+            boolean equal = true;
+            if (javaResult.length != cudaResult.length)
+                equal = false;
+            else
+                for (int j = 0; j < javaResult.length; j++)
+                    if (javaResult[j] != cudaResult[j] && equal) {
+                        equal = false;
+                    }
+            System.out.println("      EQUAL : " + equal);
+
+            if (i == 0) {
+                printTab(javaResult, "java");
+                printTab(cudaResult, "cuda");
+            }
 
             System.out.println("");
         }
@@ -127,6 +143,13 @@ public class RunZad2 {
                 matrix1d[i * n + j] = matrix2d[i][j];
 
         return matrix1d;
+    }
+
+    public static void printTab(float[] tab, String name) {
+        System.out.println("=== " + name + " ===");
+        for (float el : tab)
+            System.out.print(el + " ");
+        System.out.println("");
     }
 
 }

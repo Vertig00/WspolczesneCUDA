@@ -16,16 +16,16 @@ import static jcuda.driver.JCudaDriver.*;
 public class CzaryIMagia {
 
     // DATA
-    static String CUClass = "C:\\Users\\Vertig0\\Documents\\GitHub\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\PlainMultiply.cu";
+    static String CUClass = "C:\\WORKSPACE\\IdeaProjects\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\PlainMultiply.cu";
     static String CUMethod = "multiply";
 
-    static String CUClass2 = "C:\\Users\\Vertig0\\Documents\\GitHub\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\MatrixToVectorAddition.cu";
+    static String CUClass2 = "C:\\WORKSPACE\\IdeaProjects\\WspolczesneCUDA\\Zadanie2\\src\\main\\java\\MainRun\\MatrixToVectorAddition.cu";
     static String CUMethod2 = "add";
 
     public static float[] zaklinanieMnozenia(float[] matrix_data, float[] vector_data, int n) {
         float result_data[] = new float[n * n];
-        int threads = obliczenieIlościApostatów(n * n);
-        int blocks = threads * 2;
+        int threads = 256;
+        int blocks = (n * n) / threads + 1;
 
         // Wstępne zaklinanieMnozenia Potężnej Karty
         CUfunction function = wtepneZaklinanieKarty(CUClass, CUMethod);
@@ -64,8 +64,8 @@ public class CzaryIMagia {
 
     public static float[] zaklinanieDodawania(float[] matrix_data, int n) {
         float result_data[] = new float[n];
-        int threads = obliczenieIlościApostatów(n);
-        int blocks = threads * 2;
+        int threads = 256;
+        int blocks = (n * n) / threads + 1;
 
         // Wstępne zaklinanieMnozenia Potężnej Karty
         CUfunction function = wtepneZaklinanieKarty(CUClass2, CUMethod2);
